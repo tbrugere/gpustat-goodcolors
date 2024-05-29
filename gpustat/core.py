@@ -221,7 +221,7 @@ class GPUStat:
         colors = {}
 
         def _conditional(cond_fn, true_value, false_value,
-                         error_value=term.bold_black):
+                         error_value=term.bold_gray):
             try:
                 return cond_fn() and true_value or false_value
             except Exception:  # pylint: disable=broad-exception-caught
@@ -234,11 +234,11 @@ class GPUStat:
         colors['CName'] = _conditional(lambda: self.available, term.blue, term.red)
         colors['CTemp'] = _conditional(lambda: self.temperature < 50, term.red, term.bold_red)
         colors['FSpeed'] = _conditional(lambda: self.fan_speed < 30, term.cyan, term.bold_cyan)
-        colors['CMemU'] = _conditional(lambda: self.available, term.bold_yellow, term.bold_black)
-        colors['CMemT'] = _conditional(lambda: self.available, term.yellow, term.bold_black)
+        colors['CMemU'] = _conditional(lambda: self.available, term.bold_yellow, term.bold_gray)
+        colors['CMemT'] = _conditional(lambda: self.available, term.yellow, term.bold_gray)
         colors['CMemP'] = term.yellow
         colors['CCPUMemU'] = term.yellow
-        colors['CUser'] = term.bold_black   # gray
+        colors['CUser'] = term.bold_gray   # gray
         colors['CUtil'] = _conditional(lambda: self.utilization < 30, term.green, term.bold_green)
         colors['CUtilEnc'] = _conditional(
             lambda: self.utilization_enc < _ENC_THRESHOLD,
@@ -689,7 +689,7 @@ class GPUStatCollection(Sequence[GPUStat]):
                 timestr = self.query_time.strftime(time_format)
             header_template = '{t.bold_white}{hostname:{width}}{t.normal}  '
             header_template += '{timestr}  '
-            header_template += '{t.bold_black}{driver_version}{t.normal}'
+            header_template += '{t.bold_gray}{driver_version}{t.normal}'
 
             header_msg = header_template.format(
                     hostname=self.hostname,
